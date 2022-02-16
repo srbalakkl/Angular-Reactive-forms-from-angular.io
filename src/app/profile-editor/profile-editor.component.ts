@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-profile-editor',
@@ -20,6 +20,9 @@ export class ProfileEditorComponent implements OnInit {
       state: [''],
       zip: ['']
     }),
+    aliases: this.fb.array([
+      this.fb.control('')
+    ])
   });
 
   constructor(private fb: FormBuilder) {
@@ -40,7 +43,7 @@ export class ProfileEditorComponent implements OnInit {
 
 
   updateProfileSet() {
-    //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error
+    //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error.
     this.profileForm.setValue({
       firstName: 'setValue',
       address: {
@@ -48,4 +51,19 @@ export class ProfileEditorComponent implements OnInit {
       }
     });
   }
+
+/* todo: Steps to define formArray
+  Import the FormArray class.
+  Define a FormArray control.
+  Access the FormArray control with a getter method.
+  Display the form array in a template.*/
+
+  get aliases() {
+    return this.profileForm.get('aliases') as FormArray;
+  }
+
+  addAlias() {
+    this.aliases.push(this.fb.control(''));
+  }
+
 }
