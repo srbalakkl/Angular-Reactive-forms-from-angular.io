@@ -16,7 +16,7 @@ export class NameEditorComponent implements OnInit {
   name = new FormControl('');
 
   updateName() {
-    // this.name.setValue('bala')
-    this.name.patchValue('bala')
+    this.name.setValue('bala')
+    // this.name.patchValue('bala')
   }
 }
