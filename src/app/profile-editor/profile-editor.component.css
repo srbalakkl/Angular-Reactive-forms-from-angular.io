@@ -1,0 +1,20 @@
+/*
+.dclass{
+    display: flex;
+    width: 80%;
+    height: 1000px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: sandybrown;
+    !*align-self: center;*!
+!*   a *!
+}
+.dclass div {
+    !*display: inline-block;*!
+    width: 20%;
+    height: 100px;
+    background-color: aquamarine;
+    margin: 10px;
+    !*align-self: center;*!
+}*/

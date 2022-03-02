@@ -1,49 +1,80 @@
 <p>profile-editor works!</p>
 
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" >
+<form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
 
-  <label for="first-name">First Name: </label>
-  <input id="first-name" type="text" formControlName="firstName"><br><br>
+    <label for="first-name">First Name: </label>
+    <input formControlName="firstName" id="first-name" type="text">
 
-  <label for="last-name">Last Name: </label>
-  <input id="last-name" type="text" formControlName="lastName">
-
-  <div formGroupName="address" class="form-group" >
-    <h2>Address</h2>
-
-    <label for="street">Street: </label>
-    <input id="street" type="text" formControlName="street">
-    <br>
-    <br>
-    <label for="city">City: </label>
-    <input id="city" type="text" formControlName="city">
-    <br>
-    <br>
-    <label for="state">State: </label>
-    <input id="state" type="text" formControlName="state">
-    <br>
-    <br>
-    <label for="zip">Zip Code: </label>
-    <input id="zip" type="text" formControlName="zip">
-  </div>
-
-  <div formArrayName="aliases">
-    <h2>Aliases</h2>
-    <button type="button" (click)="addAlias()">+ Add another alias</button>
-
-    <div *ngFor="let alias of aliases.controls; let i=index">
-      <!-- The repeated alias template -->
-      <label for="alias-{{ i }}">Alias:</label>
-      <input id="alias-{{ i }}" type="text" [formControlName]="i">
+    <div *ngIf="firstName?.invalid && (firstName?.touched)"
+         class="alert alert-danger">
+        <div *ngIf="firstName?.errors?.['required']">
+            Name is required.
+        </div>
+        <div *ngIf="firstName?.errors?.['minlength']">
+            Name must be at least 3 characters long.
+        </div>
+        <div *ngIf="firstName?.errors?.['forbiddenName']">
+            Name cannot be bala.
+        </div>
     </div>
-  </div>
 
-  <p>Complete the form to enable button.</p>
-  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
-  <button type="button" (click)="updateProfile()" [disabled]="!profileForm.valid">Update Profile with patchValue() method</button>
-  <button type="button" (click)="updateProfileSet()" [disabled]="!profileForm.valid">Update Profile with setValue() method</button>
+    <br><br>
 
-  <p>{{profileForm.value | json}}</p>
-  <p>Form status {{profileForm.status}}</p>
+    <label for="last-name">Last Name: </label>
+    <input formControlName="lastName" id="last-name" type="text">
+
+    <div class="form-group" formGroupName="address">
+        <h2>Address</h2>
+
+        <label for="street">Street: </label>
+        <input formControlName="street" id="street" type="text">
+        <br>
+        <br>
+        <label for="city">City: </label>
+        <input formControlName="city" id="city" type="text">
+        <br>
+        <br>
+        <label for="state">State: </label>
+        <input formControlName="state" id="state" type="text">
+        <br>
+        <br>
+        <label for="zip">Zip Code: </label>
+        <input formControlName="zip" id="zip" type="text">
+    </div>
+
+    <div formArrayName="aliases">
+        <h2>Aliases</h2>
+        <button (click)="addAlias()" type="button">+ Add another alias</button>
+
+        <div *ngFor="let alias of aliases.controls; let i=index">
+            <!-- The repeated alias template -->
+            <label for="alias-{{ i }}">Alias:</label>
+            <input [formControlName]="i" id="alias-{{ i }}" type="text">
+        </div>
+    </div>
+
+    <p>Complete the form to enable button.</p>
+    <button [disabled]="profileForm.invalid" type="submit">Submit</button>
+    <button (click)="updateProfile()" [disabled]="!profileForm.valid" type="button">Update Profile with patchValue()
+        method
+    </button>
+    <button (click)="updateProfileSet()" [disabled]="!profileForm.valid" type="button">Update Profile with setValue()
+        method
+    </button>
+
+    <p>{{profileForm.value | json}}</p>
+    <p>Form status {{profileForm.status | json}}</p>
 
 </form>
+
+<!--
+<div class="dclass">
+    <div>Content 1</div>
+    <div>Content 2</div>
+    <div>Content 3</div>
+</div>
+
+<p>afasdf</p>
+<p>Hello</p>
+<p>hai</p>
+<p>asdf</p>-->
