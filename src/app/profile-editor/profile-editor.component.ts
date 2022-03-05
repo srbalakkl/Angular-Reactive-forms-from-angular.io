@@ -50,7 +50,6 @@ export class ProfileEditorComponent implements OnInit {
         });
     }
 
-
     updateProfileSet() {
         //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error.
         this.profileForm.setValue({
@@ -78,5 +77,10 @@ export class ProfileEditorComponent implements OnInit {
         return this.profileForm.get('firstName');
     }
 
-
+    disableAddress() {
+        //This will disable the address group of the form.
+        return this.profileForm.get('address')?.disable({emitEvent:false})
+    //    todo: We can disable the specific FormControl Name by typing FC Name followed by the group name.
+    //    todo: eg: return this.profileForm.get('address.street')?.disable({emitEvent:false})
+    }
 }

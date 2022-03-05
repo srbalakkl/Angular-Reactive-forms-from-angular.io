@@ -55,17 +55,35 @@
 
     <p>Complete the form to enable button.</p>
     <button [disabled]="profileForm.invalid" type="submit">Submit</button>
+
     <button (click)="updateProfile()" [disabled]="!profileForm.valid" type="button">Update Profile with patchValue()
         method
     </button>
+
     <button (click)="updateProfileSet()" [disabled]="!profileForm.valid" type="button">Update Profile with setValue()
         method
     </button>
+
+    <button (click)="disableAddress()" type="button">Disable Address</button>
 
     <p>{{profileForm.value | json}}</p>
     <p>Form status {{profileForm.status | json}}</p>
 
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--
 <div class="dclass">
