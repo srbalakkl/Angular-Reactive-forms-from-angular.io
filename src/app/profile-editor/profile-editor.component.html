@@ -1,5 +1,10 @@
 <p>profile-editor works!</p>
-
+<style>
+    div {
+        margin: 40px;
+        /*border: 1px solid black;*/
+    }
+</style>
 <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
 
     <label for="first-name">First Name: </label>
@@ -46,11 +51,26 @@
         <h2>Aliases</h2>
         <button (click)="addAlias()" type="button">+ Add another alias</button>
 
-        <div *ngFor="let alias of aliases.controls; let i=index">
+        <div *ngFor="let alias of aliases.controls; let i=index;">
             <!-- The repeated alias template -->
             <label for="alias-{{ i }}">Alias:</label>
             <input [formControlName]="i" id="alias-{{ i }}" type="text">
         </div>
+    </div>
+
+    <div formArrayName="contactNumbers">
+        <h2>Add Phone Numbers</h2>
+        <button (click)="addContacts()" type="button">+ Contact Numbers</button>
+
+        <section *ngFor="let contacts of getContactNumbers.controls; let i = index;" [formGroupName]="i">
+            <label for="primary">Primary Number</label>
+            <input formControlName="primaryNo" id="primary" type="text">
+
+            <label for="secondary">Secondary Number</label>
+            <input formControlName="secondaryNo" id="secondary" type="text">
+
+            <br><br>
+        </section>
     </div>
 
     <p>Complete the form to enable button.</p>
@@ -67,22 +87,20 @@
     <button (click)="disableAddress()" type="button">Disable Address</button>
 
     <p>{{profileForm.value | json}}</p>
-    <p>Form status {{profileForm.status | json}}</p>
+
+    <p>Form status = {{profileForm.status}}</p>
+
+    <ng-container *ngFor="let contacts of getContactNumbers.controls; let i = index;">
+        <p>Form array values of contact Numbers are = {{profileForm.value.contactNumbers[i].primaryNo}}</p>
+    </ng-container>
+
+    <p>the primary no is {{profileForm.get('contactNumbers.primaryNo')?.value | json}}</p>
+
+    <p>the street value is {{profileForm.get('address.street')?.value}}</p>
+
+    <p>the P No is {{primaryNo?.value | json}}</p>
 
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!--

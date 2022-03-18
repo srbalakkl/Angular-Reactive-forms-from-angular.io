@@ -3,11 +3,11 @@ import {AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, 
 
 //todo: the exporat function must be declared above the component
 
-export function forbiddenNameValidator(newRegExp: RegExp) : ValidatorFn {
-    return (control:AbstractControl):ValidationErrors | null =>{
+export function forbiddenNameValidator(newRegExp: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
         const forbidden = newRegExp.test(control.value);
         // console.log("control.value is "+control.value);
-        return forbidden? {forbiddenName:{value:control.value}}:null;
+        return forbidden ? {forbiddenName: {value: control.value}} : null;
     };
 }
 
@@ -19,26 +19,59 @@ export function forbiddenNameValidator(newRegExp: RegExp) : ValidatorFn {
 
 export class ProfileEditorComponent implements OnInit {
 
-    ngOnInit(): void {
-    }
-
     profileForm = this.fb.group({
-        firstName: ['', [Validators.required, Validators.minLength(3),forbiddenNameValidator(/bala/i)]],
+        firstName: ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/bala/i)]],
         lastName: [''],
         address: this.fb.group({
             street: [''],
             city: [''],
             state: [''],
             zip: [''],
-        }), aliases: this.fb.array([this.fb.control('')])
+        }),
+        aliases: this.fb.array([this.fb.control('')]),
+        contactNumbers: this.fb.array([])
     });
 
     constructor(private fb: FormBuilder) {
 
     }
 
+    get aliases() {
+        return this.profileForm.get('aliases') as FormArray;
+    }
+
+    /* todo: Steps to define formArray
+      Import the FormArray class.
+      Define a FormArray control.
+      Access the FormArray control with a getter method.
+      Display the form array in a template.*/
+
+    get firstName() {
+        return this.profileForm.get('firstName');
+    }
+
+    get getContactNumbers(): FormArray {
+        return this.profileForm.get('contactNumbers') as FormArray;
+    }
+
+    get primaryNo() {
+        return this.profileForm.get('contactNumbers');
+    }
+
+    ngOnInit(): void {
+        this.addContacts();
+    }
+
     onSubmit() {
         console.log(this.profileForm.value)
+/*        let cv = this.profileForm.get('contactNumbers[0].primaryNo')?.value;
+        console.log(cv);*/
+
+        for (let i = 0; i < this.getContactNumbers.length;i++) {
+            console.log(this.getContactNumbers.at(i).get('primaryNo')?.value);
+            console.log(this.getContactNumbers.at(i).get('secondaryNo')?.value);
+            console.log('\n\n');
+        }
     }
 
     updateProfile() {
@@ -53,34 +86,31 @@ export class ProfileEditorComponent implements OnInit {
     updateProfileSet() {
         //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error.
         this.profileForm.setValue({
-            firstName: 'setValue', address: {
+            firstName: 'setValue',
+            address: {
                 street: '123 Drew Street SET'
             }
         });
-    }
-
-    /* todo: Steps to define formArray
-      Import the FormArray class.
-      Define a FormArray control.
-      Access the FormArray control with a getter method.
-      Display the form array in a template.*/
-
-    get aliases() {
-        return this.profileForm.get('aliases') as FormArray;
     }
 
     addAlias() {
         this.aliases.push(this.fb.control('', []));
     }
 
-    get firstName() {
-        return this.profileForm.get('firstName');
+    addContacts() {
+        this.getContactNumbers.push(this.fb.group({
+                primaryNo: [''],
+                secondaryNo: ['']
+            })
+        );
     }
 
     disableAddress() {
         //This will disable the address group of the form.
-        return this.profileForm.get('address')?.disable({emitEvent:false})
-    //    todo: We can disable the specific FormControl Name by typing FC Name followed by the group name.
-    //    todo: eg: return this.profileForm.get('address.street')?.disable({emitEvent:false})
+        return this.profileForm.get('address')?.disable({emitEvent: false})
+        //    todo: We can disable the specific FormControl Name by typing FC Name followed by the group name.
+        //    todo: eg: return this.profileForm.get('address.street')?.disable({emitEvent:false})
     }
+
+
 }
