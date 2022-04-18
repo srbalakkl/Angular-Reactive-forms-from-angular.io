@@ -28,7 +28,7 @@ export class ProfileEditorComponent implements OnInit {
             state: [''],
             zip: [''],
         }),
-        aliases: this.fb.array([this.fb.control('')]),
+        aliases: this.fb.array([]),
         contactNumbers: this.fb.array([])
     });
 
@@ -64,10 +64,10 @@ export class ProfileEditorComponent implements OnInit {
 
     onSubmit() {
         console.log(this.profileForm.value)
-/*        let cv = this.profileForm.get('contactNumbers[0].primaryNo')?.value;
-        console.log(cv);*/
+        /*        let cv = this.profileForm.get('contactNumbers[0].primaryNo')?.value;
+                console.log(cv);*/
 
-        for (let i = 0; i < this.getContactNumbers.length;i++) {
+        for (let i = 0; i < this.getContactNumbers.length; i++) {
             console.log(this.getContactNumbers.at(i).get('primaryNo')?.value);
             console.log(this.getContactNumbers.at(i).get('secondaryNo')?.value);
             console.log('\n\n');
@@ -75,6 +75,7 @@ export class ProfileEditorComponent implements OnInit {
     }
 
     updateProfile() {
+        //todo: patchValue() WILL WORK EVEN IF YOU ARE PASSING A SINGLE VALUE IN THE FORM GROUP.
         this.profileForm.patchValue({
             firstName: 'Nancy',
             address: {
@@ -85,6 +86,8 @@ export class ProfileEditorComponent implements OnInit {
 
     updateProfileSet() {
         //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error.
+
+        //todo: SetValue() DOESN'T WORK FOR IF YOU'RE USING setvalue ON A formgroup BUT NOT PASSING IN A VALUE FOR EVERY CONTROL WITHIN THAT GROUP
         this.profileForm.setValue({
             firstName: 'setValue',
             address: {
@@ -98,6 +101,8 @@ export class ProfileEditorComponent implements OnInit {
     }
 
     addContacts() {
+        console.log()
+        //doc: In a situation like this(i.e When we have 2 or more fields) we have to always push it as the form group instead of formControl
         this.getContactNumbers.push(this.fb.group({
                 primaryNo: [''],
                 secondaryNo: ['']
@@ -113,4 +118,7 @@ export class ProfileEditorComponent implements OnInit {
     }
 
 
+    deleteFormGroup(i: number) {
+        return this.getContactNumbers.removeAt(i);
+    }
 }

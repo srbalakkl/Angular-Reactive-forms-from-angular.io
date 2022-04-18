@@ -62,15 +62,16 @@
         <h2>Add Phone Numbers</h2>
         <button (click)="addContacts()" type="button">+ Contact Numbers</button>
 
-        <section *ngFor="let contacts of getContactNumbers.controls; let i = index;" [formGroupName]="i">
+        <div *ngFor="let contacts of getContactNumbers.controls; let i = index;" [formGroupName]="i">
             <label for="primary">Primary Number</label>
             <input formControlName="primaryNo" id="primary" type="text">
 
             <label for="secondary">Secondary Number</label>
             <input formControlName="secondaryNo" id="secondary" type="text">
 
+            <button type="button" (click)="deleteFormGroup(i)">delete</button>
             <br><br>
-        </section>
+        </div>
     </div>
 
     <p>Complete the form to enable button.</p>
