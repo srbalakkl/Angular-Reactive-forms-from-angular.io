@@ -87,13 +87,15 @@ export class ProfileEditorComponent implements OnInit {
     updateProfileSet() {
         //todo: Note: the setValue() "catches the nesting error" in forms while "patchValue() fails" silently on these error.
 
-        //todo: SetValue() DOESN'T WORK FOR IF YOU'RE USING setvalue ON A formgroup BUT NOT PASSING IN A VALUE FOR EVERY CONTROL WITHIN THAT GROUP
+        //todo: SetValue() DOESN'T WORK FOR IF YOU'RE USING setvalue ON A formgroup BUT DOES NOT PASSING A VALUE FOR EVERY CONTROL WITHIN THAT GROUP.
+
         this.profileForm.setValue({
             firstName: 'setValue',
             address: {
                 street: '123 Drew Street SET'
             }
         });
+
     }
 
     addAlias() {
@@ -103,6 +105,7 @@ export class ProfileEditorComponent implements OnInit {
     addContacts() {
         console.log()
         //doc: In a situation like this(i.e When we have 2 or more fields) we have to always push it as the form group instead of formControl
+
         this.getContactNumbers.push(this.fb.group({
                 primaryNo: [''],
                 secondaryNo: ['']
@@ -116,7 +119,6 @@ export class ProfileEditorComponent implements OnInit {
         //    todo: We can disable the specific FormControl Name by typing FC Name followed by the group name.
         //    todo: eg: return this.profileForm.get('address.street')?.disable({emitEvent:false})
     }
-
 
     deleteFormGroup(i: number) {
         return this.getContactNumbers.removeAt(i);
