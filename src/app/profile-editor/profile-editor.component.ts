@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {AbstractControl, UntypedFormArray, UntypedFormBuilder, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 
 //todo: the exporat function must be declared above the component
 
@@ -32,12 +32,12 @@ export class ProfileEditorComponent implements OnInit {
         contactNumbers: this.fb.array([])
     });
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: UntypedFormBuilder) {
 
     }
 
     get aliases() {
-        return this.profileForm.get('aliases') as FormArray;
+        return this.profileForm.get('aliases') as UntypedFormArray;
     }
 
     /* todo: Steps to define formArray
@@ -50,8 +50,8 @@ export class ProfileEditorComponent implements OnInit {
         return this.profileForm.get('firstName');
     }
 
-    get getContactNumbers(): FormArray {
-        return this.profileForm.get('contactNumbers') as FormArray;
+    get getContactNumbers(): UntypedFormArray {
+        return this.profileForm.get('contactNumbers') as UntypedFormArray;
     }
 
     get primaryNo() {
