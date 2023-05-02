@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, UntypedFormArray, UntypedFormBuilder, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 
-//todo: the exporat function must be declared above the component
+//todo: the export function must be declared above the component
 
 export function forbiddenNameValidator(newRegExp: RegExp): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -44,7 +44,26 @@ export class ProfileEditorComponent implements OnInit {
       Import the FormArray class.
       Define a FormArray control.
       Access the FormArray control with a getter method.
-      Display the form array in a template.*/
+    */
+
+    /**
+     * Recalculates the value and validation status of the control.
+     *
+     * By default, it also updates the value and validity of its ancestors.
+     *
+     * @param opts Configuration options determine how the control propagates changes and emits events
+     * after updates and validity checks are applied.
+     *
+     * * `onlySelf`: When true, only update this control. When false or not supplied,
+     * update all direct ancestors. Default is false..
+     *
+     * * `emitEvent`: When true or not supplied (the default), both the `statusChanges` and
+     * `valueChanges`
+     *
+     * observables emit events with the latest status and value when the control is updated.
+     * When false, no events are emitted.
+     */
+
 
     get firstName() {
         return this.profileForm.get('firstName');
@@ -103,10 +122,10 @@ export class ProfileEditorComponent implements OnInit {
     }
 
     addContacts() {
-        console.log()
         //doc: In a situation like this(i.e When we have 2 or more fields) we have to always push it as the form group instead of formControl
 
-        this.getContactNumbers.push(this.fb.group({
+        this.getContactNumbers.push(
+            this.fb.group({
                 primaryNo: [''],
                 secondaryNo: ['']
             })
@@ -122,5 +141,9 @@ export class ProfileEditorComponent implements OnInit {
 
     deleteFormGroup(i: number) {
         return this.getContactNumbers.removeAt(i);
+    }
+
+    getAliasValue() {
+        console.log(this.aliases.value)
     }
 }

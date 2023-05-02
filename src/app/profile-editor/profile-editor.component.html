@@ -93,6 +93,8 @@
 
     <ng-container *ngFor="let contacts of getContactNumbers.controls; let i = index;">
         <p>Form array values of contact Numbers are = {{profileForm.value.contactNumbers[i].primaryNo}}</p>
+<!--        <p>Form array values of contact Numbers are = {{profileForm.get('contactNumbers.primaryNo')!.value}}</p>-->
+<!--        <p>Form array values of contact Numbers are = {{profileForm.get('firstName')!.value}}</p>-->
     </ng-container>
 
     <p>the primary no is {{profileForm.get('contactNumbers.primaryNo')?.value | json}}</p>
@@ -102,6 +104,8 @@
     <p>the P No is {{primaryNo?.value | json}}</p>
 
 </form>
+
+<button type="button" (click)="getAliasValue()"></button>
 
 
 <!--

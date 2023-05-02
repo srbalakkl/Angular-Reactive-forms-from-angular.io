@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UntypedFormControl} from "@angular/forms";
+import {forbiddenNameValidator} from "../profile-editor/profile-editor.component";
 
 @Component({
   selector: 'app-name-editor',
